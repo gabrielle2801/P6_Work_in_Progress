@@ -14,16 +14,6 @@
 -- -- ddl-end --
 -- 
 
--- object: schema_a | type: SCHEMA --
--- DROP SCHEMA IF EXISTS schema_a CASCADE;
-CREATE SCHEMA schema_a;
--- ddl-end --
--- ALTER SCHEMA schema_a OWNER TO postgres;
--- ddl-end --
-
-SET search_path TO pg_catalog,public,schema_a;
--- ddl-end --
-
 -- object: public.product | type: TABLE --
 -- DROP TABLE IF EXISTS public.product CASCADE;
 CREATE TABLE public.product (
@@ -91,7 +81,6 @@ CREATE TABLE public.address (
 	street varchar(255) NOT NULL,
 	zip_code varchar(5) NOT NULL,
 	city varchar(100) NOT NULL,
-	active boolean NOT NULL,
 	CONSTRAINT adress_pk PRIMARY KEY (id)
 
 );

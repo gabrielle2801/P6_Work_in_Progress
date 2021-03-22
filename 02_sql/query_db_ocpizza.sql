@@ -1,73 +1,114 @@
--- Query recherche sur les commandes.
-select ordered_detail.id_ordered, SUM(ordered_detail.price_ht * ordered_detail.tax * ordered_detail.quantity ) as prix_total, customer.last_name as nom, ordered.date_order
-from ordered_detail
-Left join ordered on ordered.id = ordered_detail.id_ordered
-left join customer on customer.id = ordered.id_customer
-group by ordered_detail.id_ordered, customer.last_name, ordered.date_order
-order by ordered_detail.id_ordered
+-- Afficher les commandes en préparation d'un restaurant en cours
+SELECT ordered_detail.id_ordered,
+ordered_detail.quantity AS quantité,
+product.product_name AS pizza,
+store.store_name AS restaurant
+FROM ordered_detail
+INNER JOIN ordered ON ordered.id = ordered_detail.id_ordered
+INNER JOIN product ON product.id = ordered_detail.id_product
+INNER JOIN ordered_clickcollect ON ordered_clickcollect.id_ordered = ordered.id
+LEFT JOIN store ON store.id = ordered.id_store
+WHERE ordered.id_store = 1
+AND ordered_clickcollect.status = 'preparing'
+UNION ALL
+SELECT ordered_detail.id_ordered,
+ordered_detail.quantity AS quantité,
+product.product_name AS pizza,
+store.store_name AS restaurant
+FROM ordered_detail
+INNER JOIN ordered ON ordered.id = ordered_detail.id_ordered
+INNER JOIN product ON product.id = ordered_detail.id_product
+INNER JOIN ordered_online ON ordered_online.id_ordered = ordered.id
+LEFT JOIN store ON store.id = ordered.id_store
+WHERE ordered.id_store = 1
+AND ordered_online.status = 'preparing'
+UNION ALL
+SELECT ordered_detail.id_ordered,
+ordered_detail.quantity AS quantité,
+product.product_name AS pizza,
+store.store_name AS restaurant
+FROM ordered_detail
+INNER JOIN ordered ON ordered.id = ordered_detail.id_ordered
+INNER JOIN product ON product.id = ordered_detail.id_product
+INNER JOIN ordered_takeaway ON ordered_takeaway.id_ordered = ordered.id
+LEFT JOIN store ON store.id = ordered.id_store
+WHERE ordered.id_store = 1
+AND ordered_takeaway.status = 'preparing';
 
-select SUM(ordered_detail.price_ht * ordered_detail.tax * ordered_detail.quantity )
-from ordered_detail
-left join ordered on ordered.id = ordered_detail.id_ordered
-group by ordered_detail.id_ordered
+-- Afficher les commandes en attente d'un client en particulier
+SELECT ordered_detail.id_ordered,
+ordered_detail.quantity AS quantité,
+product.product_name AS pizza,
+customer.last_name AS client,
+ordered_clickcollect.status as order_clickcollect
+FROM ordered_detail
+INNER JOIN ordered ON ordered.id = ordered_detail.id_ordered
+INNER JOIN product ON product.id = ordered_detail.id_product
+INNER JOIN ordered_clickcollect ON ordered_clickcollect.id_ordered = ordered.id
+LEFT JOIN customer ON customer.id = ordered.id_customer
+WHERE customer.id = 2
+AND ordered_clickcollect.status = 'order placed'
+UNION
+SELECT ordered_detail.id_ordered,
+ordered_detail.quantity as quantité,
+product.product_name as pizza,
+customer.last_name as client,
+ordered_online.status as order_online
+FROM ordered_detail
+INNER JOIN ordered on ordered.id = ordered_detail.id_ordered
+INNER JOIN product on product.id = ordered_detail.id_product
+INNER JOIN ordered_online on ordered_online.id_ordered = ordered.id
+LEFT JOIN customer on customer.id = ordered.id_customer
+WHERE customer.id = 2
+AND ordered_online.status = 'order placed'
+UNION
+SELECT ordered_detail.id_ordered,
+ordered_detail.quantity as quantité,
+product.product_name as pizza,
+customer.last_name as client,
+ordered_takeaway.status as order_takeaway
+FROM ordered_detail
+INNER JOIN ordered on ordered.id = ordered_detail.id_ordered
+INNER JOIN product on product.id = ordered_detail.id_product
+INNER JOIN ordered_takeaway on ordered_takeaway.id_ordered = ordered.id
+LEFT JOIN customer on customer.id = ordered.id_customer
+WHERE customer.id = 2
+AND ordered_takeaway.status = 'order placed';
 
-select ordered_detail.id_ordered, SUM(ordered_detail.price_ht * ordered_detail.tax * ordered_detail.quantity ) as prix_total, customer.last_name as nom
-from ordered_detail
-Left join ordered on ordered.id = ordered_detail.id_ordered
-left join customer on customer.id = ordered.id_customer
-left join ordered_online on ordered_online.id_ordered = ordered.id
-where ordered_online.status = 'preparing'
-group by ordered_detail.id_ordered, customer.last_name
 
-select ordered_detail.id_ordered, SUM(ordered_detail.price_ht * ordered_detail.tax * ordered_detail.quantity ) as prix_total, customer.last_name as nom, ordered_online.id_ordered as online, ordered_clickcollect.id_ordered as click_collect
-from ordered_detail
-left join ordered on ordered.id = ordered_detail.id_ordered
-left join customer on customer.id = ordered.id_customer
-left join ordered_online on ordered_online.id_ordered = ordered.id
-left join ordered_clickcollect on ordered_clickcollect.id_ordered = ordered.id
-where ordered_online.status = 'preparing'
-or ordered_clickcollect.status = 'preparing'
-group by ordered_detail.id_ordered, customer.last_name,online, click_collect
-
-select ordered_detail.id_ordered, SUM(ordered_detail.price_ht * ordered_detail.tax * ordered_detail.quantity ) as prix_total, customer.last_name as nom, ordered_online.id_ordered as online, ordered_clickcollect.id_ordered as click_collect, product.product_name as pizza
-from ordered_detail
-left join ordered on ordered.id = ordered_detail.id_ordered
-left join product on product.id = ordered_detail.id_product
-left join customer on customer.id = ordered.id_customer
-left join ordered_online on ordered_online.id_ordered = ordered.id
-left join ordered_clickcollect on ordered_clickcollect.id_ordered = ordered.id
-where ordered_online.status = 'preparing'
-or ordered_clickcollect.status = 'preparing'
-group by ordered_detail.id_ordered, customer.last_name,online, click_collect, pizza
-
-
-SELECT DISTINCT customer.last_name as Nom,address.num, address.street, address.zip_code, address.city
-FROM address
-LEFT JOIN ordered_online on ordered_online.id_address = address.id
-LEFT JOIN customer on customer.id_address = address.id
-WHERE ordered_online.status = 'preparing';
-
-
+-- Puis je retrouver le prix payé pour une pizza dans une commande terminée même si le prix a changé depuis
 -- Query Update prix
 UPDATE product
-SET price_ht = '$11.45'
-WHERE price_ht = '$11.09'
-AND id  =  8;
+SET price_ht = '$12.09'
+WHERE price_ht = '$12.45'
+AND product.product_name =  'Chèvre et miel';
+-- vérifier que le prix changé est le même dans une ancienne commande
+SELECT ordered.id,
+ordered_detail.id_product,
+ordered_detail.price_ht AS ancien_prix,
+product.price_ht AS nouveau_prix
+FROM ordered
+LEFT JOIN ordered_detail ON ordered.id = ordered_detail.id_ordered
+LEFT JOIN product ON product.id = ordered_detail.id_product
+LEFT JOIN ordered_online ON ordered.id = ordered_online.id_ordered
+WHERE ordered_online.status = 'completed';
 
+-- Puis je afficher l'adresse de livraison d'une commande terminée même si le client a changé d'adresse
 -- Query UPDATE adresse client
+INSERT INTO address (num, street, zip_code, city, active)
+VALUES(12,'Rue Auber','75009','PARIS',TRUE); -- > id = 32
+--  désactiver l'adresse (chagement d'adresse du client indice 1)
 UPDATE address
-SET num = 12
-WHERE num = 351
-AND id = 9;
-UPDATE address
-SET street = 'Rue Auber'
-WHERE street = 'Marcel Sembat'
-AND id = 9;
-UPDATE address
-SET zip_code = '75009'
-WHERE zip_code = '78140'
-AND id = 9;
-UPDATE address
-SET city = 'PARIS'
-WHERE city = 'VELIZY VILLACOUBLAY';
-AND id = 9;
+SET active = FALSE
+WHERE id = 9;
+-- Mise à jour avec la nouvel adresse du client indice 1
+UPDATE customer
+SET id_address = 32
+WHERE id = 1;
+-- Query recherche l'adresse de livraison d'une commande terminée
+SELECT address.id as ancienne_adresse, address.num, address.street, address.zip_code, address.city, ordered_online.status as etat_commande
+from address
+left join ordered_online on ordered_online.id_address = address.id
+Where status = 'completed'
+and active = false;
+

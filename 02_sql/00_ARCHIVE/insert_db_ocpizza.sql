@@ -1,18 +1,18 @@
 -- Insert to product table
 INSERT INTO product (product_name, price_ht, tax,description)
-VALUES ('Chèvre et miel',(12.45),1.10,'Pizza à base de crème et de miel AOP provenant de ruches situées dans le var'),
-('Carbonara',(11.09),1.10,'Pizza à base de crème de mascarpone et de pancetta AOP'),
-('3 Salumi',(14.27),1.10,'Pizza à base de crème de mascarpone, de sauce tomate, de jambon aux herbes, de coppa et de speck IGP'),
-('Margarita',(8.09),1.10,'Pizza végétarienne à base de tomates concassées'),
-('Salmone E Basilico',(13.36),1.10,'Pizza à base de crème mascarpone citronée et de coulis de basilic'),
+VALUES ('Chèvre et miel',12.45,1.10,'Pizza à base de crème et de miel AOP provenant de ruches situées dans le var'),
+('Carbonara',11.09,1.10,'Pizza à base de crème de mascarpone et de pancetta AOP'),
+('3 Salumi',14.27,1.10,'Pizza à base de crème de mascarpone, de sauce tomate, de jambon aux herbes, de coppa et de speck IGP'),
+('Margarita',8.09,1.10,'Pizza végétarienne à base de tomates concassées'),
+('Salmone E Basilico',13.36,1.10,'Pizza à base de crème mascarpone citronée et de coulis de basilic'),
 ('Calzone Pollo E Scamorza',12.45,1.10,'Pizza à base de crème de mascarpone, de sauce tomate et émincé de poulet. Accompagné d’une salade verte'),
-('Regina',(10.45),1.10,'Pizza à base de sauce tomate. A déguster ouverte ou en calzone'),
-('Végétarienne',(11.09),1.10,'Pizza végétarienne de sauce tomate et de mélange de légumes cuisinés (aubergines et courgettes grillées, concassées de tomates et oignons), carpaccio de courgettes, tomates cerises marinées, olives noires'),
-('Vesuvio',(11.09),1.10,'Pizza à base de sauce tomate et de merguez de boeuf et de mouton'),
-('Pizza Catania',(11.09),1.10,'Pizza à base de sauce tomate et de thon'),
-('Pizza Bolognese',(11.09),1.10,'Pizza à base de sauce tomate et de viande alla Bolognese'),
-('Calzone 3 Fromaggi',(12.45),1.10,'Pizza à base de crème de marinées. Accompagnée de pousses d’épinard'),
-('Pizza 4 Stagioni',(12.45),1.10,'Pizza végétarienne à base de sauce tomate et  mélanges de légumes cuisinés (courgettes et coeurs d’artichauts), tomates cerises marinées, olives noires ');
+('Regina',10.45,1.10,'Pizza à base de sauce tomate. A déguster ouverte ou en calzone'),
+('Végétarienne',11.09,1.10,'Pizza végétarienne de sauce tomate et de mélange de légumes cuisinés (aubergines et courgettes grillées, concassées de tomates et oignons), carpaccio de courgettes, tomates cerises marinées, olives noires'),
+('Vesuvio',11.09,1.10,'Pizza à base de sauce tomate et de merguez de boeuf et de mouton'),
+('Pizza Catania',11.09,1.10,'Pizza à base de sauce tomate et de thon'),
+('Pizza Bolognese',11.09,1.10,'Pizza à base de sauce tomate et de viande alla Bolognese'),
+('Calzone 3 Fromaggi',12.45,1.10,'Pizza à base de crème de marinées. Accompagnée de pousses d’épinard'),
+('Pizza 4 Stagioni',12.45,1.10,'Pizza végétarienne à base de sauce tomate et  mélanges de légumes cuisinés (courgettes et coeurs d’artichauts), tomates cerises marinées, olives noires ');
 
 
 -- Insert into ingredient table
@@ -192,38 +192,37 @@ VALUES (1,1, 500), -- Farine
 
 
 -- Insert to address table
-INSERT INTO address (num, street, zip_code, city, active)
-VALUES(20,'Boulevard Saint-Michel','75006','PARIS', TRUE), -- address store
-(2,'Boulevard Haussmann','75009','PARIS',TRUE),
-(8,'Quai Marcel Boyer','94200','IVRY SUR SEINE',TRUE),
-(2,'Avenue de la cité','78140','VELIZY VILLACOUBLAY',TRUE),
-(27,'Jules Ferry','93110','ROSNY SOUS BOIS',TRUE),
-(31,'Marché Couvert','92190','MEUDON',TRUE),
-(12,'Rue Nationale','75013','PARIS',TRUE), -- address founder -> 7
-(6,'Rue de Meudon','92140','CLAMART',TRUE),
-(351,'Marcel Sembat','78140','VELIZY VILLACOUBLAY',TRUE), -- address customer -> 9
-(24,'Rue Nationale','75013','PARIS',TRUE),
-(55,'Henri Barbusse','92240','MALAKOFF',TRUE),
-(33,'Rue Mouchez','75013','PARIS',TRUE),
-(82,'Rue Boileau','75016','PARIS',TRUE),
-(41,'Rue Meaux','75019','PARIS',TRUE), -- address pizzaiolo -> 14
-(70,'Rue Didot','75014','PARIS',TRUE),
-(197,'Rue Tolbiac','75013','PARIS',TRUE),
-(18,'Rue Crussol','75111','PARIS',TRUE),
-(25,'Rue Diderot','92130','ISSY LES MOULINEAUX',TRUE),
-(1,'Rue Martin','92140','CLAMART',TRUE),
-(22,'Rue Carreau','92350','LE PLESSIS ROBINSON',TRUE),
-(19,'Rue Vignon','75008','PARIS',TRUE), -- Deliver -> 21
-(14,'Place Nation','75012','PARIS',TRUE),
-(102,'Boulevard Galliéni','92130','ISSY LES MOULINEAUX',TRUE),
-(2,'Rue  Convention','75015','PARIS',TRUE),
-(2,'Avenue Raymond Aron','92160','ANTHONY',TRUE),
-(6,'Rue Longchamp','92200','NEUILLY SUR SEINE',TRUE),
-(112,'Rue Saint Placide','75006','PARIS',TRUE), -- Receptionnist -> 27
-(41,'Rue Meaux','75019','PARIS',TRUE),
-(18,'Rue Poterie','92600','SURESNE',TRUE),
-(113,'Rue Cambronne','75015','PARIS',TRUE),
-(83,'Rue Turin','75008','PARIS',TRUE); -- 31
+INSERT INTO address (num, street, zip_code, city)
+VALUES(20,'Boulevard Saint-Michel','75006','PARIS'), -- address store
+(2,'Boulevard Haussmann','75009','PARIS'),
+(8,'Quai Marcel Boyer','94200','IVRY SUR SEINE'),
+(2,'Avenue de la cité','78140','VELIZY VILLACOUBLAY'),
+(27,'Jules Ferry','93110','ROSNY SOUS BOIS'),
+(31,'Marché Couvert','92190','MEUDON'),
+(12,'Rue Nationale','75013','PARIS'), -- address founder -> 7
+(6,'Rue de Meudon','92140','CLAMART'),
+(351,'Marcel Sembat','78140','VELIZY VILLACOUBLAY'), -- address customer -> 9
+(24,'Rue Nationale','75013','PARIS'),
+(55,'Henri Barbusse','92240','MALAKOFF'),
+(33,'Rue Mouchez','75013','PARIS'),
+(82,'Rue Boileau','75016','PARIS'),
+(41,'Rue Meaux','75019','PARIS'), -- address pizzaiolo -> 14
+(70,'Rue Didot','75014','PARIS'),
+(197,'Rue Tolbiac','75013','PARIS'),
+(18,'Rue Crussol','75111','PARIS'),
+(25,'Rue Diderot','92130','ISSY LES MOULINEAUX'),
+(1,'Rue Martin','92140','CLAMART'),
+(22,'Rue Carreau','92350','LE PLESSIS ROBINSON'),
+(19,'Rue Vignon','75008','PARIS'), -- Deliver -> 21
+(14,'Place Nation','75012','PARIS'),
+(102,'Boulevard Galliéni','92130','ISSY LES MOULINEAUX'),
+(2,'Rue  Convention','75015','PARIS'),
+(2,'Avenue Raymond Aron','92160','ANTHONY'),
+(6,'Rue Longchamp','92200','NEUILLY SUR SEINE'),
+(112,'Rue Saint Placide','75006','PARIS'), -- Receptionnist -> 27
+(41,'Rue Meaux','75019','PARIS'),
+(18,'Rue Poterie','92600','SURESNE'),
+(113,'Rue Cambronne','75015','PARIS'); -- 30
 
 
 
@@ -472,7 +471,7 @@ VALUES('Darryl','Macleod','0644560808','1975-12-24', 'darrylmacleod@mail.com','U
 ('Gabrielle','Coet','0665860833','1980-06-21','gabriellecoet@mail.com', 'Dam@20404',11 ),
 ('Xavier','Noé','0622061212','1981-11-09','xaviernoe@mail.com','Dassault@2104',12),
 ('Annie','Méré','0723101212','1983-07-14','anniemere@mail.com', 'Helo@0603',13),
-('Eileen','Gray','0755108812','1975-02-14','eileengray@mail.com', 'Corbu@7502',31);
+('Annie','Méré','0723101212','1983-07-14','anniemere@mail.com', 'Helo@0603',13);
 
 -- insert to founder table
 INSERT INTO founder (first_name, last_name, phone, birth_date, email, password,id_address, salary, start_date, end_date, id_store)
@@ -501,70 +500,54 @@ INSERT INTO deliver (first_name, last_name, phone, birth_date,email, password, i
 VALUES('Alex', 'Kaloustian', '0743558832','1995-02-22','alexkaloustian@mail.com', 'alex@02', 21,2500 ,'2015-07-23', NULL,1),
 ('Henri', 'Renan', '0769528832','1992-02-22','henrirenan@mail.com', 'renan@22', 22,2500 ,'2020-06-15', NULL,2),
 ('Sophie', 'Garmin', '0787453622','1992-02-25','sophiegarmin@mail.com', 'sophie@02', 23,2500 ,'2015-07-23', NULL,3),
-('Héloise', 'Narche', '0699221423','1995-12-22','heloisenarche@mail.com', 'narche@02', 24,2500 ,'2017-07-23', NULL,4),
+('Héloise', 'Narche', '0699221423','1995-12-22','alexkaloustian@mail.com', 'narche@02', 24,2500 ,'2017-07-23', NULL,4),
 ('François', 'Lamarque', '0689741122','1975-02-22','francoislamarque@mail.com', 'lamarque@12', 25,2500 ,'1996-07-23', NULL,5),
 ('Loic', 'Papaoui', '0658231433','1997-02-22','loicpapaoui@mail.com', 'loic@85', 26,2500 ,'2020-07-23', NULL,3);
 
 -- insert into Ordered
 INSERT INTO ordered(date_order,id_pizzaiolo, id_store, id_customer)
-VALUES ('2021-03-03 12:20:35',9, 1, 1), -- 1
-('2021-03-10 21:20:35',9, 1, 3),-- 2
-('2021-03-10 20:20:35',10, 2, 2),-- 3
-('2021-03-10 19:20:35',11, 3, 4),-- 4
-('2021-03-12 14:20:35',12, 4, 5),-- 5
-('2021-03-12 11:20:35',9, 1, 6),-- 6
-('2021-03-12 11:20:35',13, 4, 3),-- 7
-('2021-03-12 14:20:35',9, 1, 1),
-('2021-03-15 19:20:19',11, 4, 6);-- 9
+VALUES ('2021-03-03 12:20:35',8, 1, 1), -- 1
+('2021-03-10 21:20:35',9, 2, 3),-- 2
+('2021-03-10 20:20:35',10, 3, 2),-- 3
+('2021-03-10 19:20:35',11, 4, 4),-- 4
+('2021-03-12 14:20:35',12, 5, 5),-- 5
+('2021-03-12 11:20:35',9, 1, 1),-- 6
+('2021-03-12 11:20:35',9, 1, 1),-- 7
+('2021-03-12 14:20:35',10, 3, 2);-- 8
 
 -- Insert into Ordered On line
 INSERT INTO ordered_online(id_ordered, status,id_address,id_deliver)
-VALUES(1,'completed',9,18 ),
-(2,'on the way', 11,19),
-(3,'preparing', 10,22),
-(4,'preparing',14,21);
+VALUES(25,'completed',9,17 ),
+(26,'on the way', 11,19),
+(27,'preparing', 10,18),
+(31,'preparing',14,21);
 
 -- Insert into Ordered Take Away
 INSERT INTO ordered_takeaway (id_ordered, status,id_receptionnist)
-VALUES (5,'completed',16),
-(6,'preparing',16);-- 9
+VALUES (31,'preparing',16);-- 9
 -- Insert into Ordered Click & Collect
 INSERT INTO ordered_clickcollect (id_ordered, status,id_receptionnist)
 VALUES
-(6,'order placed',16),
-(7,'ready to pick up',15),
-(8,'order placed',16),
-(9,'preparing',16);
+(28,'order placed',16),
+(29,'ready to pick up',15),
+(30,'order placed',16),
+(32,'preparing',16);
 
 -- Insert into Order_Detail
 INSERT INTO ordered_detail(id_product, id_ordered,quantity, price_ht, tax )
-VALUES (1, 1, 1,12.45,1.10),-- 1
-(5,1,2, 13.36, 1.10),
-(9,2,1, 11.09, 1.10),
-(8,2,1, 11.09, 1.10),
-(4,2,1, 8.09, 1.10),
-(7,3,2, 10.45, 1.10),
-(13,4,1, 12.45, 1.10),
-(3,5,1, 14.27, 1.10),
-(2,5,2, 11.09, 1.10),
-(5,6,1, 13.36, 1.10),
-(8,6,1, 11.09, 1.10),
-(5,7,2, 13.36, 1.10),
-(11,8,2, 11.09, 1.10),
-(7,9,1, 10.45, 1.10),
-(8,9,1, 11.09, 1.10);
-
-INSERT INTO ordered(date_order,id_pizzaiolo, id_store, id_customer)
-VALUES ('2021-03-15 19:20:22',9, 1, 4),
-('2021-03-15 20:20:16',9, 1, 3);
-
-INSERT INTO ordered_clickcollect (id_ordered, status,id_receptionnist)
-VALUES(14,'preparing',16);
-
-INSERT INTO ordered_detail(id_product, id_ordered,quantity, price_ht, tax )
-VALUES (1, 19, 1,12.45,1.10),
-(3, 19, 1,14.27,1.10),
-(9, 20, 2,11.09,1.10);
+VALUES (1, 25, 1,12.45,1.10),-- 1
+(5,25,2, 13.36, 1.10),
+(9,26,1, 11.09, 1.10),
+(8,26,1, 11.09, 1.10),
+(4,26,1, 8.09, 1.10),
+(7,27,2, 10.45, 1.10),
+(13,28,1, 12.45, 1.10),
+(3,28,1, 14.27, 1.10),
+(2,29,2, 11.09, 1.10),
+(5,30,1, 13.36, 1.10),
+(8,30,1, 11.09, 1.10),
+(11,31,1, 11.09, 1.10),
+(7,32,2, 10.45, 1.10);
 
 
 
