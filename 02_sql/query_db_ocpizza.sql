@@ -112,3 +112,35 @@ left join ordered_online on ordered_online.id_address = address.id
 Where status = 'completed'
 and active = false;
 
+-- Afficher le contenu d'une commande
+SELECT ordered_detail.id_ordered,
+customer.last_name AS nom,
+ordered_detail.quantity AS quantité,
+product.product_name AS pizza,
+SUM(ordered_detail.price_ht * ordered_detail.tax) AS prix
+FROM ordered_detail
+INNER JOIN ordered ON ordered.id = ordered_detail.id_ordered
+INNER JOIN product ON product.id = ordered_detail.id_product
+INNER JOIN ordered_online ON ordered_online.id_ordered = ordered.id
+LEFT JOIN customer ON customer.id = ordered.id_customer
+WHERE ordered_online.status = 'on the way'
+GROUP BY  ordered_detail.id_ordered, nom, quantité, pizza;
+
+-- Afficher le contenu d'une commande --> ne fonctionne pas ...
+SELECT COUNT(ordered_detail.id_ordered) AS quantité_total,
+customer.last_name AS nom,
+ordered_detail.quantity AS quantité,
+product.product_name AS pizza,
+SUM(ordered_detail.price_ht * ordered_detail.tax) AS prix,
+SUM(SELECT(quantité_total*prix))AS prix_total
+FROM ordered_detail
+INNER JOIN ordered ON ordered.id = ordered_detail.id_ordered
+INNER JOIN product ON product.id = ordered_detail.id_product
+INNER JOIN ordered_online ON ordered_online.id_ordered = ordered.id
+LEFT JOIN customer ON customer.id = ordered.id_customer
+WHERE ordered_online.status = 'on the way'
+GROUP BY nom, quantité, pizza;
+-- Afficher le contenu d'une commande quantité est bien = à 3
+SELECT COUNT(ordered_detail.id_ordered) AS quantité
+FROM ordered_detail
+WHERE ordered_detail.id_ordered = 2;
